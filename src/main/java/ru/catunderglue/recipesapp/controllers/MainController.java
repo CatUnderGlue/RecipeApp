@@ -16,7 +16,7 @@ public class MainController {
         return """
                 <h1>Информация</h1>
                 <ul>
-                <li>Имя: <b>Максим</b></li>
+                <li>Имя: <b><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Максим</a></b></li>
                 <li>Название проекта: <b>Сайт с рецептами</b></li>
                 <li>Дата начала создания проекта: <b>31.01.2023г.</b></li>
                 <li>Описание: <b>Сайт, который будет показывать интересующий пользователя рецепт.</b></li>
