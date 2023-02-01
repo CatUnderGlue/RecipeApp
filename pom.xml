@@ -10,7 +10,7 @@
     </parent>
     <groupId>ru.catunderglue</groupId>
     <artifactId>recipesApp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2023.02.01</version>
     <name>recipesApp</name>
     <description>recipesApp</description>
     <properties>
