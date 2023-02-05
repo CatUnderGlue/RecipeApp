@@ -1,5 +1,6 @@
 package ru.catunderglue.recipesapp.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.catunderglue.recipesapp.model.Ingredient;
@@ -8,15 +9,8 @@ import ru.catunderglue.recipesapp.services.IngredientService;
 @RestController
 @RequestMapping("ingredient")
 public class IngredientController {
-    private final IngredientService ingredientService;
-
-    public IngredientController(IngredientService ingredientService){
-        this.ingredientService = ingredientService;
-        this.ingredientService.createIngredient(new Ingredient("Творог", 350, "г."));
-        this.ingredientService.createIngredient(new Ingredient("Куриное яйцо", 2, "шт."));
-        this.ingredientService.createIngredient(new Ingredient("Пшеничная мука", 6, "ст.л."));
-        this.ingredientService.createIngredient(new Ingredient("Сахар", 2, "ст.л."));
-    }
+    @Autowired
+    private IngredientService ingredientService;
 
     @PostMapping
     public ResponseEntity<Integer> createIngredient(@RequestBody Ingredient ingredient) {
@@ -40,7 +34,8 @@ public class IngredientController {
         }
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < ingredientService.getSize(); i++) {
-            builder.append(ingredientService.getIngredientByID(i)).append("<br><br>");
+            Ingredient ingredient = ingredientService.getIngredientByID(i);
+            builder.append("Id: ").append(ingredient.getId()).append(" ").append(ingredient).append("<br><br>");
         }
         return builder.toString();
     }

@@ -1,7 +1,10 @@
 package ru.catunderglue.recipesapp.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.catunderglue.recipesapp.model.Ingredient;
 import ru.catunderglue.recipesapp.model.Recipe;
+import ru.catunderglue.recipesapp.services.IngredientService;
 import ru.catunderglue.recipesapp.services.RecipeService;
 
 import java.util.HashMap;
@@ -13,6 +16,9 @@ public class ResipeServiceImpl implements RecipeService {
     private static int idGenerator = 0;
     private static final Map<Integer, Recipe> recipeMap = new HashMap<>();
 
+    @Autowired
+    private IngredientService ingredientService;
+
     @Override
     public int getSize() {
         return recipeMap.size();
@@ -21,6 +27,9 @@ public class ResipeServiceImpl implements RecipeService {
     @Override
     public Recipe createRecipe(Recipe recipe) {
         recipe.setId(idGenerator);
+        for (Ingredient ingredient : recipe.getIngredients()){
+            ingredientService.createIngredient(ingredient);
+        }
         recipeMap.put(idGenerator++, recipe);
         return recipe;
     }
