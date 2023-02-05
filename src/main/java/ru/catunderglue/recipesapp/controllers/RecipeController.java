@@ -30,9 +30,9 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
+    public ResponseEntity<Integer> createRecipe(@RequestBody Recipe recipe) {
         Recipe createdRecipe = recipeService.createRecipe(recipe);
-        return ResponseEntity.ok(createdRecipe);
+        return ResponseEntity.ok(createdRecipe.getId());
     }
 
     @GetMapping("{recipeID}")
@@ -46,6 +46,9 @@ public class RecipeController {
 
     @GetMapping("all")
     public String getAllRecipes(){
+        if (recipeService.getSize() == 0){
+            return ResponseEntity.notFound().build().toString();
+        }
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < recipeService.getSize(); i++) {
             builder.append(recipeService.getRecipeByID(i)).append("<br><br>");
@@ -53,13 +56,16 @@ public class RecipeController {
         return builder.toString();
     }
 
-    @PutMapping()
-    public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe recipe){
-        Recipe updatedRecipe = recipeService.updateRecipeByID(recipe.getId(), recipe);
-        return ResponseEntity.ok(updatedRecipe);
+    @PutMapping("{recipeID}")
+    public ResponseEntity<Integer> updateRecipe(@RequestBody Recipe recipe, @PathVariable int recipeID){
+        Recipe updatedRecipe = recipeService.updateRecipeByID(recipeID, recipe);
+        if (updatedRecipe == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedRecipe.getId());
     }
 
-    @DeleteMapping("delete/{recipeID}")
+    @DeleteMapping("{recipeID}")
     public ResponseEntity<Recipe> deleteRecipe(@PathVariable int recipeID){
         Recipe deletedRecipe = recipeService.deleteRecipeByID(recipeID);
         if (deletedRecipe == null){

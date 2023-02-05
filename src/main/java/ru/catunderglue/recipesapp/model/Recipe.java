@@ -5,8 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Recipe {
-    private static int idGenerator = 0;
-    private final int id;
+    private int id;
     private String title;
     private int cookingTime;
     private int numberOfServings;
@@ -19,11 +18,14 @@ public class Recipe {
         setIngredients(ingredients);
         setCookingInstructions(cookingInstructions);
         setNumberOfServings(numberOfServings);
-        this.id = idGenerator++;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -31,7 +33,7 @@ public class Recipe {
     }
 
     public void setTitle(String title) {
-        if (title != null && !title.isBlank() &&!title.isEmpty()) {
+        if (title != null && !title.isBlank() && !title.isEmpty()) {
             this.title = title;
         } else {
             throw new IllegalArgumentException("У рецепта должно быть название!");
@@ -105,6 +107,7 @@ public class Recipe {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+        builder.append("ID:").append(id).append("<br>");
         builder.append(title).append("<br>");
         builder.append("Время готовки: ").append(cookingTime).append(" минут<br>");
         builder.append("Количество порций: ").append(numberOfServings).append(" шт.<br>");

@@ -3,8 +3,7 @@ package ru.catunderglue.recipesapp.model;
 import java.util.Objects;
 
 public class Ingredient {
-    private static int idGenerator = 0;
-    private final int id;
+    private int id;
     private String name;
     private int count;
     private String measureUnit;
@@ -13,19 +12,22 @@ public class Ingredient {
         setName(name);
         setCount(count);
         setMeasureUnit(measureUnit);
-        this.id = idGenerator++;
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void setName(String name) throws IllegalArgumentException{
-        if (name != null && !name.isBlank() &&!name.isEmpty()) {
+    public void setName(String name) throws IllegalArgumentException {
+        if (name != null && !name.isBlank() && !name.isEmpty()) {
             this.name = name;
         } else {
             throw new IllegalArgumentException("У ингредиента должно быть корректное название!");
@@ -49,7 +51,7 @@ public class Ingredient {
     }
 
     public void setMeasureUnit(String measureUnit) {
-        if (measureUnit != null && !measureUnit.isBlank() &&!measureUnit.isEmpty()) {
+        if (measureUnit != null && !measureUnit.isBlank() && !measureUnit.isEmpty()) {
             this.measureUnit = measureUnit;
         } else {
             throw new IllegalArgumentException("У ингредиента должна быть корректная единица измерения!");

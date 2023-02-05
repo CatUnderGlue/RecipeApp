@@ -4,21 +4,24 @@ import org.springframework.stereotype.Service;
 import ru.catunderglue.recipesapp.model.Ingredient;
 import ru.catunderglue.recipesapp.services.IngredientService;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
-    private static final Map<Integer, Ingredient> ingredientsMap = new TreeMap<>();
+
+    private static int idGenerator = 0;
+    private static final Map<Integer, Ingredient> ingredientsMap = new HashMap<>();
 
     @Override
-    public int getSize(){
+    public int getSize() {
         return ingredientsMap.size();
     }
 
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
-        ingredientsMap.put(ingredient.getId(), ingredient);
+        ingredient.setId(idGenerator);
+        ingredientsMap.put(idGenerator++, ingredient);
         return ingredient;
     }
 
@@ -29,8 +32,11 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient updateIngredientByID(int id, Ingredient ingredient) {
-        ingredientsMap.put(id, ingredient);
-        return ingredient;
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.put(id, ingredient);
+            return ingredient;
+        }
+        return null;
     }
 
     @Override

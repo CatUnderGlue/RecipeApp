@@ -19,9 +19,9 @@ public class IngredientController {
     }
 
     @PostMapping
-    public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
+    public ResponseEntity<Integer> createIngredient(@RequestBody Ingredient ingredient) {
         Ingredient createdIngredient = ingredientService.createIngredient(ingredient);
-        return ResponseEntity.ok(createdIngredient);
+        return ResponseEntity.ok(createdIngredient.getId());
     }
 
     @GetMapping("{ingredientID}")
@@ -33,13 +33,28 @@ public class IngredientController {
         return ingredient.toString();
     }
 
-    @PutMapping()
-    public ResponseEntity<Ingredient> updateIngredient(@RequestBody Ingredient ingredient){
-        Ingredient updatedIngredient = ingredientService.updateIngredientByID(ingredient.getId(), ingredient);
-        return ResponseEntity.ok(updatedIngredient);
+    @GetMapping("all")
+    public String getAllIngredient(){
+        if (ingredientService.getSize() == 0){
+            return ResponseEntity.notFound().build().toString();
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < ingredientService.getSize(); i++) {
+            builder.append(ingredientService.getIngredientByID(i)).append("<br><br>");
+        }
+        return builder.toString();
     }
 
-    @DeleteMapping("delete/{ingredientID}")
+    @PutMapping("{ingredientID}")
+    public ResponseEntity<Integer> updateIngredient(@RequestBody Ingredient ingredient, @PathVariable int ingredientID){
+        Ingredient updatedIngredient = ingredientService.updateIngredientByID(ingredientID, ingredient);
+        if (updatedIngredient == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedIngredient.getId());
+    }
+
+    @DeleteMapping("{ingredientID}")
     public ResponseEntity<Ingredient> deleteIngredient(@PathVariable int ingredientID){
         Ingredient deletedIngredient = ingredientService.deleteIngredientByID(ingredientID);
         if (deletedIngredient == null){

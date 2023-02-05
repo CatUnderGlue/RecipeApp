@@ -4,12 +4,14 @@ import org.springframework.stereotype.Service;
 import ru.catunderglue.recipesapp.model.Recipe;
 import ru.catunderglue.recipesapp.services.RecipeService;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Service
 public class ResipeServiceImpl implements RecipeService {
-    private static final Map<Integer, Recipe> recipeMap = new TreeMap<>();
+
+    private static int idGenerator = 0;
+    private static final Map<Integer, Recipe> recipeMap = new HashMap<>();
 
     @Override
     public int getSize() {
@@ -18,7 +20,8 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
-        recipeMap.put(recipe.getId(), recipe);
+        recipe.setId(idGenerator);
+        recipeMap.put(idGenerator++, recipe);
         return recipe;
     }
 
@@ -30,8 +33,11 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe updateRecipeByID(int id, Recipe recipe) {
-        recipeMap.put(id, recipe);
-        return recipe;
+        if (recipeMap.containsKey(id)){
+            recipeMap.put(id, recipe);
+            return recipe;
+        }
+        return null;
     }
 
     @Override
