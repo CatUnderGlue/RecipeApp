@@ -63,4 +63,13 @@ public class RecipeController {
         Recipe updatedRecipe = recipeService.updateRecipeByID(recipe.getId(), recipe);
         return ResponseEntity.ok(updatedRecipe);
     }
+
+    @DeleteMapping("delete/{recipeID}")
+    public ResponseEntity<Recipe> deleteRecipe(@PathVariable int recipeID){
+        Recipe deletedRecipe = recipeService.deleteRecipeByID(recipeID);
+        if (deletedRecipe == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deletedRecipe);
+    }
 }

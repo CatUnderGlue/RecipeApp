@@ -38,4 +38,13 @@ public class IngredientController {
         Ingredient updatedIngredient = ingredientService.updateIngredientByID(ingredient.getId(), ingredient);
         return ResponseEntity.ok(updatedIngredient);
     }
+
+    @DeleteMapping("delete/{ingredientID}")
+    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable int ingredientID){
+        Ingredient deletedIngredient = ingredientService.deleteIngredientByID(ingredientID);
+        if (deletedIngredient == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deletedIngredient);
+    }
 }

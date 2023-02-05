@@ -35,6 +35,10 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient deleteIngredientByID(int id) {
-        return ingredientsMap.remove(id);
+        if (ingredientsMap.containsKey(id)) {
+            return ingredientsMap.remove(id);
+        } else {
+            return null;
+        }
     }
 }

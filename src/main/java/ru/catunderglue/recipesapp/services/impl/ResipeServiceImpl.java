@@ -12,7 +12,7 @@ public class ResipeServiceImpl implements RecipeService {
     private static final Map<Integer, Recipe> recipeMap = new TreeMap<>();
 
     @Override
-    public int getSize(){
+    public int getSize() {
         return recipeMap.size();
     }
 
@@ -36,6 +36,10 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe deleteRecipeByID(int id) {
-        return recipeMap.remove(id);
+        if (recipeMap.containsKey(id)) {
+            return recipeMap.remove(id);
+        } else {
+            return null;
+        }
     }
 }
