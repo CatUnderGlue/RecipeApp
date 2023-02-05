@@ -39,7 +39,7 @@ public class Ingredient {
     }
 
     public void setCount(int count) {
-        if (count > 0) {
+        if (count >= 0) {
             this.count = count;
         } else {
             throw new IllegalArgumentException("У ингредиента не может быть отрицательное количество!");

@@ -13,9 +13,9 @@ public class IngredientController {
     private IngredientService ingredientService;
 
     @PostMapping
-    public ResponseEntity<Integer> createIngredient(@RequestBody Ingredient ingredient) {
-        Ingredient createdIngredient = ingredientService.createIngredient(ingredient);
-        return ResponseEntity.ok(createdIngredient.getId());
+    public ResponseEntity<String> createIngredient(@RequestBody Ingredient ingredient) {
+        ingredientService.createIngredient(ingredient);
+        return ResponseEntity.ok("Success");
     }
 
     @GetMapping("{ingredientID}")
