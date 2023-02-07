@@ -2,8 +2,9 @@ package ru.catunderglue.recipesapp.services;
 
 import ru.catunderglue.recipesapp.model.Ingredient;
 
+import java.util.Collection;
+
 public interface IngredientService {
-    int getSize();
 
     Ingredient createIngredient(Ingredient ingredient);
 
@@ -14,4 +15,5 @@ public interface IngredientService {
     Ingredient deleteIngredientByID(int id);
 
 
+    Collection<Ingredient> getAllIngredients();
 }

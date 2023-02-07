@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.catunderglue.recipesapp.model.Ingredient;
 import ru.catunderglue.recipesapp.services.IngredientService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,29 +12,23 @@ import java.util.Map;
 public class IngredientServiceImpl implements IngredientService {
 
     private static int idGenerator = 0;
-    private static final Map<Integer, Ingredient> ingredientsMap = new HashMap<>();
-
-    @Override
-    public int getSize() {
-        return ingredientsMap.size();
-    }
+    private static final Map<Integer, Ingredient> INGREDIENT_MAP = new HashMap<>();
 
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
-        ingredient.setId(idGenerator);
-        ingredientsMap.put(idGenerator++, ingredient);
+        INGREDIENT_MAP.put(idGenerator++, ingredient);
         return ingredient;
     }
 
     @Override
     public Ingredient getIngredientByID(int id) {
-        return ingredientsMap.getOrDefault(id, null);
+        return INGREDIENT_MAP.getOrDefault(id, null);
     }
 
     @Override
     public Ingredient updateIngredientByID(int id, Ingredient ingredient) {
-        if (ingredientsMap.containsKey(id)) {
-            ingredientsMap.put(id, ingredient);
+        if (INGREDIENT_MAP.containsKey(id)) {
+            INGREDIENT_MAP.put(id, ingredient);
             return ingredient;
         }
         return null;
@@ -41,10 +36,15 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient deleteIngredientByID(int id) {
-        if (ingredientsMap.containsKey(id)) {
-            return ingredientsMap.remove(id);
+        if (INGREDIENT_MAP.containsKey(id)) {
+            return INGREDIENT_MAP.remove(id);
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Collection<Ingredient> getAllIngredients() {
+        return INGREDIENT_MAP.values();
     }
 }

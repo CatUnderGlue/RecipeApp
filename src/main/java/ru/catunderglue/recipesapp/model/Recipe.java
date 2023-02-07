@@ -1,31 +1,22 @@
 package ru.catunderglue.recipesapp.model;
 
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Recipe {
-    private int id;
     private String title;
     private int cookingTime;
     private int numberOfServings;
-    private Ingredient[] ingredients;
-    private String[] cookingInstructions;
+    private List<Ingredient> ingredients;
+    private List<String> cookingInstructions;
 
-    public Recipe(String title, int cookingTime, int numberOfServings, Ingredient[] ingredients, String[] cookingInstructions) {
+    public Recipe(String title, int cookingTime, int numberOfServings, List<Ingredient> ingredients, List<String> cookingInstructions) {
         setTitle(title);
         setCookingTime(cookingTime);
         setIngredients(ingredients);
         setCookingInstructions(cookingInstructions);
         setNumberOfServings(numberOfServings);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -64,24 +55,24 @@ public class Recipe {
         }
     }
 
-    public Ingredient[] getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
-        if (ingredients.length > 0) {
+    public void setIngredients(List<Ingredient> ingredients) {
+        if (ingredients.size() > 0) {
             this.ingredients = ingredients;
         } else {
             throw new IllegalArgumentException("У рецепта должен быть хотя бы один ингредиент!");
         }
     }
 
-    public String[] getCookingInstructions() {
+    public List<String> getCookingInstructions() {
         return cookingInstructions;
     }
 
-    public void setCookingInstructions(String[] cookingInstructions) {
-        if (cookingInstructions.length > 0) {
+    public void setCookingInstructions(List<String> cookingInstructions) {
+        if (cookingInstructions.size() > 0) {
             this.cookingInstructions = cookingInstructions;
         } else {
             throw new IllegalArgumentException("У рецепта должен быть хотя бы один шаг приготовления!");
@@ -93,21 +84,17 @@ public class Recipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
-        return cookingTime == recipe.cookingTime && Objects.equals(title, recipe.title) && Arrays.equals(ingredients, recipe.ingredients) && Arrays.equals(cookingInstructions, recipe.cookingInstructions);
+        return cookingTime == recipe.cookingTime && numberOfServings == recipe.numberOfServings && Objects.equals(title, recipe.title) && Objects.equals(ingredients, recipe.ingredients) && Objects.equals(cookingInstructions, recipe.cookingInstructions);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(title, cookingTime);
-        result = 31 * result + Arrays.hashCode(ingredients);
-        result = 31 * result + Arrays.hashCode(cookingInstructions);
-        return result;
+        return Objects.hash(title, cookingTime, numberOfServings, ingredients, cookingInstructions);
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ID:").append(id).append("<br>");
         builder.append(title).append("<br>");
         builder.append("Время готовки: ").append(cookingTime).append(" минут<br>");
         builder.append("Количество порций: ").append(numberOfServings).append(" шт.<br>");
@@ -116,8 +103,8 @@ public class Recipe {
             builder.append("• ").append(ingredient).append("<br>");
         }
         builder.append("Инструкция по приготовлению:<br>");
-        for (int i = 0; i < cookingInstructions.length; i++) {
-            builder.append("<b>").append(i + 1).append("</b>").append(" - ").append(cookingInstructions[i]).append("<br>");
+        for (int i = 0; i < cookingInstructions.size(); i++) {
+            builder.append("<b>").append(i + 1).append("</b>").append(" - ").append(cookingInstructions.get(i)).append("<br>");
         }
         return builder.toString();
     }

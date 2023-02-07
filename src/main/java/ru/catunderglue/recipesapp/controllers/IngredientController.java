@@ -1,52 +1,49 @@
 package ru.catunderglue.recipesapp.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.catunderglue.recipesapp.model.Ingredient;
 import ru.catunderglue.recipesapp.services.IngredientService;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("ingredient")
 public class IngredientController {
-    @Autowired
-    private IngredientService ingredientService;
+
+    private final IngredientService ingredientService;
+
+    public IngredientController(IngredientService ingredientService) {
+        this.ingredientService = ingredientService;
+    }
 
     @PostMapping
-    public ResponseEntity<String> createIngredient(@RequestBody Ingredient ingredient) {
+    public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
         ingredientService.createIngredient(ingredient);
-        return ResponseEntity.ok("Success");
+        return ResponseEntity.ok(ingredient);
     }
 
     @GetMapping("{ingredientID}")
-    public String getIngredient(@PathVariable int ingredientID){
+    public ResponseEntity<Ingredient> getIngredient(@PathVariable int ingredientID){
         Ingredient ingredient = ingredientService.getIngredientByID(ingredientID);
         if (ingredient == null){
-            return ResponseEntity.notFound().build().toString();
+            return ResponseEntity.notFound().build();
         }
-        return ingredient.toString();
+        return ResponseEntity.ok(ingredient);
     }
 
     @GetMapping("all")
-    public String getAllIngredient(){
-        if (ingredientService.getSize() == 0){
-            return ResponseEntity.notFound().build().toString();
-        }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < ingredientService.getSize(); i++) {
-            Ingredient ingredient = ingredientService.getIngredientByID(i);
-            builder.append("Id: ").append(ingredient.getId()).append(" ").append(ingredient).append("<br><br>");
-        }
-        return builder.toString();
+    public ResponseEntity<Collection<Ingredient>> getAllIngredient(){
+        return ResponseEntity.ok(ingredientService.getAllIngredients());
     }
 
     @PutMapping("{ingredientID}")
-    public ResponseEntity<Integer> updateIngredient(@RequestBody Ingredient ingredient, @PathVariable int ingredientID){
+    public ResponseEntity<Ingredient> updateIngredient(@RequestBody Ingredient ingredient, @PathVariable int ingredientID){
         Ingredient updatedIngredient = ingredientService.updateIngredientByID(ingredientID, ingredient);
         if (updatedIngredient == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(updatedIngredient.getId());
+        return ResponseEntity.ok(updatedIngredient);
     }
 
     @DeleteMapping("{ingredientID}")

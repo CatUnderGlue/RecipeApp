@@ -8,7 +8,12 @@ public class MainController {
 
     @GetMapping()
     public String defaultPage() {
-        return "Приложение запущено";
+        return """
+                <p>Приложение запущено</p>
+                <form action="/info"><input type="submit" value="Info page"></form>
+                <form action="/recipe/all"><input type="submit" value="Recipes"></form>
+                <form action="/ingredient/all"><input type="submit" value="Ingredients"></form>
+                """;
     }
 
     @GetMapping("/info")
@@ -22,6 +27,7 @@ public class MainController {
                 <li>Описание: <b>Сайт, который будет показывать интересующий пользователя рецепт.</b></li>
                 <li>ЯП: <b>Java (corretto-17.0.6)</b>. Фреймворк <b>Spring</b></li>
                 </ul>
+                <form action="/"><input type="submit" value="Main page"></form>
                 """;
 
     }

@@ -3,7 +3,6 @@ package ru.catunderglue.recipesapp.model;
 import java.util.Objects;
 
 public class Ingredient {
-    private int id;
     private String name;
     private int count;
     private String measureUnit;
@@ -12,14 +11,6 @@ public class Ingredient {
         setName(name);
         setCount(count);
         setMeasureUnit(measureUnit);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

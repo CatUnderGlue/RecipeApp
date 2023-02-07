@@ -1,59 +1,57 @@
 package ru.catunderglue.recipesapp.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.catunderglue.recipesapp.model.Recipe;
 import ru.catunderglue.recipesapp.services.RecipeService;
 
+import java.util.Collection;
+import java.util.List;
+
 @RestController
 @RequestMapping("recipe")
 public class RecipeController {
-    @Autowired
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
+
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
 
     @PostMapping
-    public ResponseEntity<String> createRecipe(@RequestBody Recipe recipe) {
+    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
         recipeService.createRecipe(recipe);
-        return ResponseEntity.ok("Success");
+        return ResponseEntity.ok(recipe);
     }
 
     @PostMapping("some")
-    public ResponseEntity<String> createRecipes(@RequestBody Recipe[] recipes) {
+    public ResponseEntity<List<Recipe>> createRecipes(@RequestBody List<Recipe> recipes) {
         for (Recipe recipe : recipes) {
             recipeService.createRecipe(recipe);
         }
-        return ResponseEntity.ok("Success");
+        return ResponseEntity.ok(recipes);
     }
 
     @GetMapping("{recipeID}")
-    public String getRecipe(@PathVariable int recipeID) {
+    public ResponseEntity<Recipe> getRecipe(@PathVariable int recipeID) {
         Recipe recipe = recipeService.getRecipeByID(recipeID);
         if (recipe == null) {
-            return ResponseEntity.notFound().build().toString();
+            return ResponseEntity.notFound().build();
         }
-        return recipe.toString();
+        return ResponseEntity.ok(recipe);
     }
 
     @GetMapping("all")
-    public String getAllRecipes() {
-        if (recipeService.getSize() == 0) {
-            return ResponseEntity.notFound().build().toString();
-        }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < recipeService.getSize(); i++) {
-            builder.append(recipeService.getRecipeByID(i)).append("<br><br>");
-        }
-        return builder.toString();
+    public ResponseEntity<Collection<Recipe>> getAllRecipes() {
+        return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 
     @PutMapping("{recipeID}")
-    public ResponseEntity<Integer> updateRecipe(@RequestBody Recipe recipe, @PathVariable int recipeID) {
+    public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe recipe, @PathVariable int recipeID) {
         Recipe updatedRecipe = recipeService.updateRecipeByID(recipeID, recipe);
         if (updatedRecipe == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(updatedRecipe.getId());
+        return ResponseEntity.ok(updatedRecipe);
     }
 
     @DeleteMapping("{recipeID}")
