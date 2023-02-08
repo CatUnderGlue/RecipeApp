@@ -1,5 +1,7 @@
 package ru.catunderglue.recipesapp.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Ingredient {
@@ -18,7 +20,7 @@ public class Ingredient {
     }
 
     public void setName(String name) throws IllegalArgumentException {
-        if (name != null && !name.isBlank() && !name.isEmpty()) {
+        if (!StringUtils.isBlank(name)) {
             this.name = name;
         } else {
             throw new IllegalArgumentException("У ингредиента должно быть корректное название!");
@@ -42,7 +44,7 @@ public class Ingredient {
     }
 
     public void setMeasureUnit(String measureUnit) {
-        if (measureUnit != null && !measureUnit.isBlank() && !measureUnit.isEmpty()) {
+        if (!StringUtils.isBlank(measureUnit)) {
             this.measureUnit = measureUnit;
         } else {
             throw new IllegalArgumentException("У ингредиента должна быть корректная единица измерения!");
