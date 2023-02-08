@@ -30,9 +30,16 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
+
     @GetMapping()
     public ResponseEntity<Collection<Recipe>> getAllRecipes(@RequestParam(required = false, defaultValue = "-1") Integer ingredientID) {
         Collection<Recipe> recipes = recipeService.getRecByIngredId(ingredientID);
+        return ResponseEntity.ok(recipes);
+    }
+
+    @GetMapping("pagination")
+    public ResponseEntity<Collection<Recipe>> getRecipesPerPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit){
+        Collection<Recipe> recipes = recipeService.pagination(page, limit);
         return ResponseEntity.ok(recipes);
     }
 

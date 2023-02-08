@@ -11,6 +11,8 @@ public interface RecipeService {
 
     Collection<Recipe> getRecByIngredId(Integer id);
 
+    Collection<Recipe> pagination(Integer page, Integer limit);
+
     Recipe updateRecipeByID(int id, Recipe recipe);
 
     Recipe deleteRecipeByID(int id);

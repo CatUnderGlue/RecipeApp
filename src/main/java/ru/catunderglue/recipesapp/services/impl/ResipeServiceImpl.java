@@ -53,6 +53,17 @@ public class ResipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public Collection<Recipe> pagination(Integer page, Integer limit){
+        Collection<Recipe> recipes = new ArrayList<>();
+        for (int i = page * limit - limit; i < page * limit; i++ ) {
+            if (RECIPE_MAP.containsKey(i)){
+                recipes.add(RECIPE_MAP.get(i));
+            }
+        }
+        return recipes;
+    }
+
+    @Override
     public Recipe updateRecipeByID(int id, Recipe recipe) {
         if (RECIPE_MAP.containsKey(id)){
             RECIPE_MAP.put(id, recipe);
