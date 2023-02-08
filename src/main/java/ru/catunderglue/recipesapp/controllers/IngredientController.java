@@ -32,7 +32,7 @@ public class IngredientController {
         return ResponseEntity.ok(ingredient);
     }
 
-    @GetMapping("all")
+    @GetMapping()
     public ResponseEntity<Collection<Ingredient>> getAllIngredient(){
         return ResponseEntity.ok(ingredientService.getAllIngredients());
     }

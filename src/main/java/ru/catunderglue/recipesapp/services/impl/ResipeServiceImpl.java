@@ -32,7 +32,7 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipeByID(int id) {
-        return RECIPE_MAP.getOrDefault(id, null);
+        return RECIPE_MAP.get(id);
 
     }
 

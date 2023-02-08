@@ -40,7 +40,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipe);
     }
 
-    @GetMapping("all")
+    @GetMapping()
     public ResponseEntity<Collection<Recipe>> getAllRecipes() {
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
