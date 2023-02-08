@@ -21,7 +21,7 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
-        for (Ingredient ingredient : recipe.getIngredients()){
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientService.createIngredient(ingredient);
         }
         RECIPE_MAP.put(idGenerator++, recipe);
@@ -35,7 +35,7 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Collection<Recipe> getRecByIngredId(Integer id) {
-        if (id == -1){
+        if (id == -1) {
             return getAllRecipes();
         }
         Collection<Recipe> recipes = new ArrayList<>();
@@ -53,10 +53,10 @@ public class ResipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Collection<Recipe> pagination(Integer page, Integer limit){
+    public Collection<Recipe> pagination(Integer page, Integer limit) {
         Collection<Recipe> recipes = new ArrayList<>();
-        for (int i = page * limit - limit; i < page * limit; i++ ) {
-            if (RECIPE_MAP.containsKey(i)){
+        for (int i = page * limit - limit; i < page * limit; i++) {
+            if (RECIPE_MAP.containsKey(i)) {
                 recipes.add(RECIPE_MAP.get(i));
             }
         }
@@ -65,7 +65,7 @@ public class ResipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe updateRecipeByID(int id, Recipe recipe) {
-        if (RECIPE_MAP.containsKey(id)){
+        if (RECIPE_MAP.containsKey(id)) {
             RECIPE_MAP.put(id, recipe);
             return recipe;
         }

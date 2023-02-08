@@ -19,37 +19,36 @@ public class IngredientController {
 
     @PostMapping
     public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
-        ingredientService.createIngredient(ingredient);
-        return ResponseEntity.ok(ingredient);
+        return ResponseEntity.ok(ingredientService.createIngredient(ingredient));
     }
 
     @GetMapping("{ingredientID}")
-    public ResponseEntity<Ingredient> getIngredient(@PathVariable int ingredientID){
+    public ResponseEntity<Ingredient> getIngredient(@PathVariable int ingredientID) {
         Ingredient ingredient = ingredientService.getIngredientByID(ingredientID);
-        if (ingredient == null){
+        if (ingredient == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(ingredient);
     }
 
     @GetMapping()
-    public ResponseEntity<Collection<Ingredient>> getAllIngredient(){
+    public ResponseEntity<Collection<Ingredient>> getAllIngredient() {
         return ResponseEntity.ok(ingredientService.getAllIngredients());
     }
 
     @PutMapping("{ingredientID}")
-    public ResponseEntity<Ingredient> updateIngredient(@RequestBody Ingredient ingredient, @PathVariable int ingredientID){
+    public ResponseEntity<Ingredient> updateIngredient(@RequestBody Ingredient ingredient, @PathVariable int ingredientID) {
         Ingredient updatedIngredient = ingredientService.updateIngredientByID(ingredientID, ingredient);
-        if (updatedIngredient == null){
+        if (updatedIngredient == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updatedIngredient);
     }
 
     @DeleteMapping("{ingredientID}")
-    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable int ingredientID){
+    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable int ingredientID) {
         Ingredient deletedIngredient = ingredientService.deleteIngredientByID(ingredientID);
-        if (deletedIngredient == null){
+        if (deletedIngredient == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(deletedIngredient);

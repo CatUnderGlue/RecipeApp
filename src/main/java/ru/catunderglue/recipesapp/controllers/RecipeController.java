@@ -38,7 +38,7 @@ public class RecipeController {
     }
 
     @GetMapping("pagination")
-    public ResponseEntity<Collection<Recipe>> getRecipesPerPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit){
+    public ResponseEntity<Collection<Recipe>> getRecipesPerPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
         Collection<Recipe> recipes = recipeService.pagination(page, limit);
         return ResponseEntity.ok(recipes);
     }
