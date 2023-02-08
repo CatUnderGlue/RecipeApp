@@ -19,8 +19,7 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
-        recipeService.createRecipe(recipe);
-        return ResponseEntity.ok(recipe);
+        return ResponseEntity.ok(recipeService.createRecipe(recipe));
     }
 
     @PostMapping("some")
@@ -31,6 +30,12 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
+    @GetMapping()
+    public ResponseEntity<Collection<Recipe>> getAllRecipes(@RequestParam(required = false, defaultValue = "-1") Integer ingredientID) {
+        Collection<Recipe> recipes = recipeService.getRecByIngredId(ingredientID);
+        return ResponseEntity.ok(recipes);
+    }
+
     @GetMapping("{recipeID}")
     public ResponseEntity<Recipe> getRecipe(@PathVariable int recipeID) {
         Recipe recipe = recipeService.getRecipeByID(recipeID);
@@ -38,11 +43,6 @@ public class RecipeController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(recipe);
-    }
-
-    @GetMapping()
-    public ResponseEntity<Collection<Recipe>> getAllRecipes() {
-        return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 
     @PutMapping("{recipeID}")

@@ -6,9 +6,7 @@ import ru.catunderglue.recipesapp.model.Recipe;
 import ru.catunderglue.recipesapp.services.IngredientService;
 import ru.catunderglue.recipesapp.services.RecipeService;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ResipeServiceImpl implements RecipeService {
@@ -33,7 +31,25 @@ public class ResipeServiceImpl implements RecipeService {
     @Override
     public Recipe getRecipeByID(int id) {
         return RECIPE_MAP.get(id);
+    }
 
+    @Override
+    public Collection<Recipe> getRecByIngredId(Integer id) {
+        if (id == -1){
+            return getAllRecipes();
+        }
+        Collection<Recipe> recipes = new ArrayList<>();
+        Ingredient ingredientTmp = ingredientService.getIngredientByID(id);
+        for (Recipe recipe : RECIPE_MAP.values()) {
+            if (recipe != null) {
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    if (ingredient.equals(ingredientTmp) && !recipes.contains(recipe)) {
+                        recipes.add(recipe);
+                    }
+                }
+            }
+        }
+        return recipes;
     }
 
     @Override

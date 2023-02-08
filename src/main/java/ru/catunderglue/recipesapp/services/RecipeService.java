@@ -9,6 +9,8 @@ public interface RecipeService {
 
     Recipe getRecipeByID(int id);
 
+    Collection<Recipe> getRecByIngredId(Integer id);
+
     Recipe updateRecipeByID(int id, Recipe recipe);
 
     Recipe deleteRecipeByID(int id);
