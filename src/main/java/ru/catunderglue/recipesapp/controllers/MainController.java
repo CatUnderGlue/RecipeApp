@@ -11,8 +11,8 @@ public class MainController {
         return """
                 <p>Приложение запущено</p>
                 <form action="/info"><input type="submit" value="Info page"></form>
-                <form action="/recipe/all"><input type="submit" value="Recipes"></form>
-                <form action="/ingredient/all"><input type="submit" value="Ingredients"></form>
+                <form action="/recipe"><input type="submit" value="Recipes"></form>
+                <form action="/ingredient"><input type="submit" value="Ingredients"></form>
                 """;
     }
 
