@@ -20,7 +20,7 @@ public class Ingredient {
     }
 
     public void setName(String name) throws IllegalArgumentException {
-        if (!StringUtils.isBlank(name)) {
+        if (StringUtils.isNotBlank(name)) {
             this.name = name;
         } else {
             throw new IllegalArgumentException("У ингредиента должно быть корректное название!");
@@ -44,7 +44,7 @@ public class Ingredient {
     }
 
     public void setMeasureUnit(String measureUnit) {
-        if (!StringUtils.isBlank(measureUnit)) {
+        if (!StringUtils.isNotBlank(measureUnit)) {
             this.measureUnit = measureUnit;
         } else {
             throw new IllegalArgumentException("У ингредиента должна быть корректная единица измерения!");

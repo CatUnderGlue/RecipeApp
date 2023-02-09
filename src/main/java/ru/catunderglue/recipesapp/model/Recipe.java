@@ -26,7 +26,7 @@ public class Recipe {
     }
 
     public void setTitle(String title) {
-        if (!StringUtils.isBlank(title)) {
+        if (StringUtils.isNotBlank(title)) {
             this.title = title;
         } else {
             throw new IllegalArgumentException("У рецепта должно быть название!");

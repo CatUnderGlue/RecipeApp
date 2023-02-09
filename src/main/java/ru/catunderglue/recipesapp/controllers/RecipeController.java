@@ -84,46 +84,18 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
-
-    @GetMapping()
+    @GetMapping("")
     @Operation(
-            summary = "Получение всех рецептов с возможностью фильтрации.",
-            description = "Фильтрует рецепты по указанному id ингредиента или выдаёт все рецепты, если id не был указан"
-    )
-    @Parameter(
-            name = "ingredientID",
-            description = "ID необходимого ингредиента",
-            example = "1"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Рецепты найдены",
-            content = {
-                    @Content(
-                            mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
-                    )
-            }
-    )
-    public ResponseEntity<Collection<Recipe>> getAllRecipes(@RequestParam(required = false, defaultValue = "-1") Integer ingredientID) {
-        Collection<Recipe> recipes = recipeService.getRecByIngredId(ingredientID);
-        return ResponseEntity.ok(recipes);
-    }
-
-    @GetMapping("pagination")
-    @Operation(
-            summary = "Получение рецептов по страницам.",
+            summary = "Получение всех рецептов.",
             description = "Выдаёт рецепты, разбитые на страницы по нужному количеству"
     )
     @Parameters(value = {
             @Parameter(
                     name = "page",
-                    description = "Номер страницы",
-                    example = "1"),
+                    description = "Номер страницы"),
             @Parameter(
                     name = "limit",
-                    description = "Максимальное кол-во рецептов на странице",
-                    example = "5")
+                    description = "Максимальное кол-во рецептов на странице")
     }
     )
     @ApiResponse(
@@ -136,8 +108,33 @@ public class RecipeController {
                     )
             }
     )
-    public ResponseEntity<Collection<Recipe>> getRecipesPerPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer limit) {
+    public ResponseEntity<Collection<Recipe>> getAllRecipes(@RequestParam(required = false, defaultValue = "0") Integer page, @RequestParam(required = false, defaultValue = "0") Integer limit) {
         Collection<Recipe> recipes = recipeService.pagination(page, limit);
+        return ResponseEntity.ok(recipes);
+    }
+
+    @GetMapping("/ingredient/{ingredientID}")
+    @Operation(
+            summary = "Получение всех рецептов с указанным ингредиентом",
+            description = "Фильтрует рецепты по указанному id ингредиента."
+    )
+    @Parameter(
+            name = "ingredientID",
+            description = "ID необходимого ингредиента",
+            example = "0"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Рецепты найдены",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
+                    )
+            }
+    )
+    public ResponseEntity<Collection<Recipe>> getRecipeByIngredID(@PathVariable Integer ingredientID) {
+        Collection<Recipe> recipes = recipeService.getRecByIngredId(ingredientID);
         return ResponseEntity.ok(recipes);
     }
 
@@ -165,9 +162,7 @@ public class RecipeController {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Рецепт не найден",
-                            content = @Content(
-                                    mediaType = "text"
-                            )
+                            content = @Content()
                     )
             }
     )
@@ -212,9 +207,7 @@ public class RecipeController {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Рецепт не найден",
-                            content = @Content(
-                                    mediaType = "text"
-                            )
+                            content = @Content()
                     )
             }
     )
@@ -250,9 +243,7 @@ public class RecipeController {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Рецепт не найден",
-                            content = @Content(
-                                    mediaType = "text"
-                            )
+                            content = @Content()
                     )
             }
     )

@@ -95,9 +95,7 @@ public class IngredientController {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Ингредиент не найден",
-                            content = @Content(
-                                    mediaType = "text"
-                            )
+                            content = @Content()
                     )
             }
     )
@@ -142,9 +140,7 @@ public class IngredientController {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Ингредиент не найден",
-                            content = @Content(
-                                    mediaType = "text"
-                            )
+                            content = @Content()
                     )
             }
     )
@@ -180,9 +176,7 @@ public class IngredientController {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Ингредиент не найден",
-                            content = @Content(
-                                    mediaType = "text"
-                            )
+                            content = @Content()
                     )
             }
     )
