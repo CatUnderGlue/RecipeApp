@@ -1,6 +1,8 @@
 package ru.catunderglue.recipesapp.model;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +26,7 @@ public class Recipe {
     }
 
     public void setTitle(String title) {
-        if (title != null && !title.isBlank() && !title.isEmpty()) {
+        if (StringUtils.isNotBlank(title)) {
             this.title = title;
         } else {
             throw new IllegalArgumentException("У рецепта должно быть название!");
