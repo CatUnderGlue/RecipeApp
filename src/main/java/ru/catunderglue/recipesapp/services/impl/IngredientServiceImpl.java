@@ -1,10 +1,14 @@
 package ru.catunderglue.recipesapp.services.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import ru.catunderglue.recipesapp.model.Ingredient;
+import ru.catunderglue.recipesapp.services.FilesService;
 import ru.catunderglue.recipesapp.services.IngredientService;
 
-import java.util.Collection;
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,23 +16,30 @@ import java.util.Map;
 public class IngredientServiceImpl implements IngredientService {
 
     private static int idGenerator = 0;
-    private static final Map<Integer, Ingredient> INGREDIENT_MAP = new HashMap<>();
+    private static Map<Integer, Ingredient> ingredientMap = new HashMap<>();
+    private final FilesService filesService;
+
+    public IngredientServiceImpl(FilesService filesService) {
+        this.filesService = filesService;
+    }
 
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
-        INGREDIENT_MAP.put(idGenerator++, ingredient);
+        ingredientMap.put(idGenerator++, ingredient);
+        saveToFile();
         return ingredient;
     }
 
     @Override
     public Ingredient getIngredientByID(int id) {
-        return INGREDIENT_MAP.get(id);
+        return ingredientMap.get(id);
     }
 
     @Override
     public Ingredient updateIngredientByID(int id, Ingredient ingredient) {
-        if (INGREDIENT_MAP.containsKey(id)) {
-            INGREDIENT_MAP.put(id, ingredient);
+        if (ingredientMap.containsKey(id)) {
+            ingredientMap.put(id, ingredient);
+            saveToFile();
             return ingredient;
         }
         return null;
@@ -36,15 +47,44 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient deleteIngredientByID(int id) {
-        if (INGREDIENT_MAP.containsKey(id)) {
-            return INGREDIENT_MAP.remove(id);
+        if (ingredientMap.containsKey(id)) {
+            Ingredient removedIngredient = ingredientMap.remove(id);
+            saveToFile();
+            return removedIngredient;
         } else {
             return null;
         }
     }
 
     @Override
-    public Collection<Ingredient> getAllIngredients() {
-        return INGREDIENT_MAP.values();
+    public Map<Integer, Ingredient> getAllIngredients() {
+        return ingredientMap;
+    }
+
+    @PostConstruct
+    private void init() {
+        readFromFile();
+    }
+
+    private void saveToFile() {
+        try {
+            String json = new ObjectMapper().writeValueAsString(ingredientMap);
+            filesService.saveIngredientsToFile(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void readFromFile() {
+        String json = filesService.readIngredientsFromFile();
+        try {
+            if (!json.isBlank()) {
+                ingredientMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Ingredient>>() {
+                });
+                idGenerator = ingredientMap.size();
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

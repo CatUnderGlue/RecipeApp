@@ -16,6 +16,7 @@ import ru.catunderglue.recipesapp.services.RecipeService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("recipe")
@@ -84,7 +85,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
-    @GetMapping("")
+    @GetMapping()
     @Operation(
             summary = "Получение всех рецептов.",
             description = "Выдаёт рецепты, разбитые на страницы по нужному количеству"
@@ -108,8 +109,8 @@ public class RecipeController {
                     )
             }
     )
-    public ResponseEntity<Collection<Recipe>> getAllRecipes(@RequestParam(required = false, defaultValue = "0") Integer page, @RequestParam(required = false, defaultValue = "0") Integer limit) {
-        Collection<Recipe> recipes = recipeService.pagination(page, limit);
+    public ResponseEntity<Map<Integer, Recipe>> getAllRecipes(@RequestParam(required = false, defaultValue = "0") Integer page, @RequestParam(required = false, defaultValue = "0") Integer limit) {
+        Map<Integer, Recipe> recipes = recipeService.pagination(page, limit);
         return ResponseEntity.ok(recipes);
     }
 

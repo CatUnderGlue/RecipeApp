@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.catunderglue.recipesapp.model.Ingredient;
 import ru.catunderglue.recipesapp.services.IngredientService;
 
-import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("ingredient")
@@ -67,7 +67,7 @@ public class IngredientController {
                     )
             }
     )
-    public ResponseEntity<Collection<Ingredient>> getAllIngredient() {
+    public ResponseEntity<Map<Integer, Ingredient>> getAllIngredient() {
         return ResponseEntity.ok(ingredientService.getAllIngredients());
     }
 
