@@ -57,7 +57,8 @@ public class FilesServiceImpl implements FilesService {
         try {
             return Files.readString(Path.of(dataFilesPath, dataFileName));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return "";
         }
     }
 
@@ -83,7 +84,7 @@ public class FilesServiceImpl implements FilesService {
                 Files.createFile(Path.of(dataFilesPath, ingredientDataFileName));
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

@@ -111,7 +111,7 @@ public class ResipeServiceImpl implements RecipeService {
             String json = new ObjectMapper().writeValueAsString(recipeMap);
             filesService.saveRecipesToFile(json);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -124,7 +124,7 @@ public class ResipeServiceImpl implements RecipeService {
                 idGenerator = recipeMap.size(); // Как же долго я не мог понять, почему рецепты исчезают
             }
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
