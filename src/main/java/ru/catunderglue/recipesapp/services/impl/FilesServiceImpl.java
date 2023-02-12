@@ -1,11 +1,13 @@
 package ru.catunderglue.recipesapp.services.impl;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.catunderglue.recipesapp.services.FilesService;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -14,10 +16,8 @@ public class FilesServiceImpl implements FilesService {
 
     @Value(value = "${path.to.data.files}")
     private String dataFilesPath;
-
     @Value(value = "${name.of.recipe.data.file}")
     private String recipeDataFileName;
-
     @Value(value = "${name.of.ingredient.data.file}")
     private String ingredientDataFileName;
 
@@ -39,6 +39,40 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public String readIngredientsFromFile() {
         return readFromFile(ingredientDataFileName);
+    }
+
+    @Override
+    public void importRecipeDataFile(MultipartFile file) throws IOException {
+        cleanDataFile(recipeDataFileName);
+        File dataFile = getRecipeDataFileInfo();
+
+        try (FileOutputStream fos = new FileOutputStream(dataFile)) {
+            IOUtils.copy(file.getInputStream(), fos);
+        } catch (IOException e) {
+            throw new IOException();
+        }
+    }
+
+    @Override
+    public void importIngredientDataFile(MultipartFile file) throws IOException {
+        cleanDataFile(ingredientDataFileName);
+        File dataFile = getIngredientDataFileInfo();
+
+        try (FileOutputStream fos = new FileOutputStream(dataFile)) {
+            IOUtils.copy(file.getInputStream(), fos);
+        } catch (IOException e) {
+            throw new IOException();
+        }
+    }
+
+    @Override
+    public File getRecipeDataFileInfo(){
+        return new File(dataFilesPath + "/" + recipeDataFileName);
+    }
+
+    @Override
+    public File getIngredientDataFileInfo(){
+        return new File(dataFilesPath + "/" + ingredientDataFileName);
     }
 
     public boolean cleanDataFile(String dataFileName) {
