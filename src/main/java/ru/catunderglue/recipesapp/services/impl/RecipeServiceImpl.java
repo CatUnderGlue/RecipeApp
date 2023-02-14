@@ -14,14 +14,13 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Service
-public class ResipeServiceImpl implements RecipeService {
+public class RecipeServiceImpl implements RecipeService {
     private static int idGenerator = 0;
     private static Map<Integer, Recipe> recipeMap = new HashMap<>();
-
     private final IngredientService ingredientService;
     private final FilesService filesService;
 
-    public ResipeServiceImpl(IngredientService ingredientService, FilesService filesService) {
+    public RecipeServiceImpl(IngredientService ingredientService, FilesService filesService) {
         this.ingredientService = ingredientService;
         this.filesService = filesService;
     }
