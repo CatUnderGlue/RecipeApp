@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public interface FilesService {
     /**
@@ -61,4 +62,6 @@ public interface FilesService {
      * @return инофрмация о файле
      */
     File getIngredientDataFileInfo();
+
+    Path createTempFile(String suffix);
 }

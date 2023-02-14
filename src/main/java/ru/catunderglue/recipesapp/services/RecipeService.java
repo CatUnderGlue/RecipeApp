@@ -2,6 +2,8 @@ package ru.catunderglue.recipesapp.services;
 
 import ru.catunderglue.recipesapp.model.Recipe;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 
@@ -63,4 +65,6 @@ public interface RecipeService {
      * @return карта со всеми рецептами
      */
     Map<Integer, Recipe> getAllRecipes();
+
+    Path createRecipeTextFile() throws IOException;
 }
