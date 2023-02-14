@@ -2,6 +2,7 @@ package ru.catunderglue.recipesapp.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import java.io.*;
 
 @RestController
 @RequestMapping(path = "files")
+@Tag(name = "Файлы", description = "Методы для работы с файлами")
 public class FilesController {
 
     private final FilesService filesService;

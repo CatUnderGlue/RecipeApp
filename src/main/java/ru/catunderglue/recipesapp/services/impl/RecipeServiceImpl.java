@@ -11,6 +11,11 @@ import ru.catunderglue.recipesapp.services.IngredientService;
 import ru.catunderglue.recipesapp.services.RecipeService;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 @Service
@@ -98,6 +103,18 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Map<Integer, Recipe> getAllRecipes() {
         return recipeMap;
+    }
+
+    @Override
+    public Path createRecipeTextFile() throws IOException {
+        Path path = filesService.createTempFile("recipes");
+        for (Recipe recipe : recipeMap.values()) {
+            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+                writer.append(recipe.toString());
+                writer.append("\n");
+            }
+        }
+        return path;
     }
 
     @PostConstruct

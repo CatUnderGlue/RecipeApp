@@ -22,16 +22,16 @@ public class Recipe {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(title).append("<br>");
-        builder.append("Время готовки: ").append(cookingTime).append(" минут<br>");
-        builder.append("Количество порций: ").append(numberOfServings).append(" шт.<br>");
-        builder.append("Ингредиенты:<br>");
+        builder.append(title).append("\n");
+        builder.append("Время готовки: ").append(cookingTime).append(" минут\n");
+        builder.append("Количество порций: ").append(numberOfServings).append(" шт.\n");
+        builder.append("Ингредиенты:\n");
         for (Ingredient ingredient : ingredients) {
-            builder.append("• ").append(ingredient).append("<br>");
+            builder.append("• ").append(ingredient).append("\n");
         }
-        builder.append("Инструкция по приготовлению:<br>");
+        builder.append("Инструкция по приготовлению:\n");
         for (int i = 0; i < cookingInstructions.size(); i++) {
-            builder.append("<b>").append(i + 1).append("</b>").append(" - ").append(cookingInstructions.get(i)).append("<br>");
+            builder.append(i + 1).append(" - ").append(cookingInstructions.get(i)).append("\n");
         }
         return builder.toString();
     }
