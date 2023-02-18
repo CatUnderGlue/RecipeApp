@@ -108,8 +108,8 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Path createRecipeTextFile() throws IOException {
         Path path = filesService.createTempFile("recipes");
-        for (Recipe recipe : recipeMap.values()) {
-            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+        try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+            for (Recipe recipe : recipeMap.values()) {
                 writer.append(recipe.toString());
                 writer.append("\n");
             }

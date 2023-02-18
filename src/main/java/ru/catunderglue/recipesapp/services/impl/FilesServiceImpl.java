@@ -66,17 +66,17 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public File getRecipeDataFileInfo(){
+    public File getRecipeDataFileInfo() {
         return new File(dataFilesPath + "/" + recipeDataFileName);
     }
 
     @Override
-    public File getIngredientDataFileInfo(){
+    public File getIngredientDataFileInfo() {
         return new File(dataFilesPath + "/" + ingredientDataFileName);
     }
 
     @Override
-    public Path createTempFile(String suffix){
+    public Path createTempFile(String suffix) {
         try {
             return Files.createTempFile(Path.of(dataFilesPath), "tempFile", suffix);
         } catch (IOException e) {
@@ -84,7 +84,7 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    public boolean cleanDataFile(String dataFileName) {
+    private boolean cleanDataFile(String dataFileName) {
         Path path = Path.of(dataFilesPath, dataFileName);
         try {
             Files.deleteIfExists(path);
@@ -96,7 +96,7 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    public String readFromFile(String dataFileName) {
+    private String readFromFile(String dataFileName) {
         try {
             return Files.readString(Path.of(dataFilesPath, dataFileName));
         } catch (IOException e) {
@@ -105,7 +105,7 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    public boolean saveToFile(String json, String dataFileName) {
+    private boolean saveToFile(String json, String dataFileName) {
         try {
             cleanDataFile(dataFileName);
             Files.writeString(Path.of(dataFilesPath, dataFileName), json);
